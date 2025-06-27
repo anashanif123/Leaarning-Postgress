@@ -62,6 +62,25 @@ app.get('/fetchData/:id', (req, res) => {
     });
 })
 
+app.put('/update/:id',(req,res)=>{
+    
+    const id = req.params.id;
+    const name  =req.body.name;
+
+    const update_query = 'UPDATE demotable SET name = $1 WHERE id = $2';
+   
+    connection.query(update_query, [name, id], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send("Error updating data");
+        } else {
+            console.log(result);
+            res.status(200).send("Data updated successfully");
+        }
+    });
+
+})
+
 
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
